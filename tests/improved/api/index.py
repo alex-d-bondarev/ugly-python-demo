@@ -6,4 +6,4 @@ def get_index_response():
 
     :return: response object
     """
-    return requests.get('http://127.0.0.1:5000/')
+    return requests.get("http://127.0.0.1:5000/")

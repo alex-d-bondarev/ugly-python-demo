@@ -1,5 +1,5 @@
 #.DEFAULT_GOAL := help
-demo_path = ./tests/improved/
+demo_path = ./tests/ugly/
 
 help:
 	@echo "make \t\t\t- print supported commands"
@@ -15,13 +15,13 @@ simulate_jenkins: install code_style
 install:
 	PIPENV_YES=true pipenv install
 
-code_style: clean_before_analysis black isort flake8 maintainability_index gandalf
+code_style: clean_before_analysis black isort flake8 maintainability_index execute_project_gorilla
 
 clean_before_analysis:
-	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run python -c'import gandalf; gandalf.clean_before_test()'
+	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run python -c'import project_gorilla; project_gorilla.clean_before_test()'
 
-gandalf:
-	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run python -c'import gandalf; gandalf.check_quality()'
+execute_project_gorilla:
+	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run python -c'import project_gorilla; project_gorilla.check_quality()'
 
 black:
 	 PIPENV_IGNORE_VIRTUALENVS=1 pipenv run black $(demo_path)

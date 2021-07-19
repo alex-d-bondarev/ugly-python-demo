@@ -24,15 +24,16 @@ def check_quality():
     new_flake8 = _get_new_flake8_stats()
     new_mi = _get_new_mi_stats()
 
-    assert int(before["flake8"]) >= new_flake8,\
-        "You have introduced new pip8 errors. " \
-        "Please check flake8.log for details. " \
-        "Please fix all new and maybe some old errors"
-    assert float(before["mi"]) <= new_mi, \
-        "You have made code less maintainable. " \
-        "Please check radon.log for details. " \
-        "Please improve maintainability back. " \
-        "Appreciate if you make it even better. "
+    if len(before) != 0:
+        assert int(before["flake8"]) >= new_flake8,\
+            "You have introduced new pip8 errors. " \
+            "Please check flake8.log for details. " \
+            "Please fix all new and maybe some old errors"
+        assert float(before["mi"]) <= new_mi, \
+            "You have made code less maintainable. " \
+            "Please check radon.log for details. " \
+            "Please improve maintainability back. " \
+            "Appreciate if you make it even better. "
 
     _save_new_results(new_flake8, new_mi)
 
@@ -44,10 +45,11 @@ def _read_before_dict():
     root_dir = os.path.dirname(os.path.abspath(__file__))
     project_quality = os.path.join(root_dir, "project_quality.txt")
 
-    for l in open(project_quality):
-        if not l.startswith("#"):
-            k, v = l.rstrip().split('=')
-            before_dict[k] = v
+    if os.path.exists(project_quality):
+        for l in open(project_quality):
+            if not l.startswith("#"):
+                k, v = l.rstrip().split('=')
+                before_dict[k] = v
 
     return before_dict
 
@@ -76,5 +78,5 @@ def _save_new_results(new_flake8, new_mi):
     project_quality = os.path.join(root_dir, "project_quality.txt")
     file = open(project_quality, "w")
     file.truncate(0)
-    file.write(f"flake8={new_flake8}\n")
-    file.write(f"mi={new_mi}\n")
+    file.write(f"# Goal is '0'\nflake8={new_flake8}\n")
+    file.write(f"# Goal is '100'\nmi={new_mi}\n")

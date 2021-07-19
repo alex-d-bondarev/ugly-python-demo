@@ -12,10 +12,7 @@ class Account:
 
     def create(self):
         """Create new Account"""
-        request_data = {
-            "name": self.name,
-            "number": self.number
-        }
+        request_data = {"name": self.name, "number": self.number}
         requests.post(url=ACCOUNT_API_URL, data=request_data)
 
     def assign_role(self, role):
@@ -23,10 +20,7 @@ class Account:
 
         :param role:
         """
-        request_data = {
-            "name": self.name,
-            "role": role
-        }
+        request_data = {"name": self.name, "role": role}
         requests.put(url=ACCOUNT_API_URL, data=request_data)
 
     def delete(self):

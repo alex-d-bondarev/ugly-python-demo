@@ -44,9 +44,7 @@ def test_limited_account_can_do_nothing(none_account):
 
 @pytest.fixture(scope="function")
 def admin_account():
-    """Fixture for creating and deleting admin account
-
-    """
+    """Fixture for creating and deleting admin account"""
     admin_name = "mr_admin"
     account = _create_admin_account(admin_name)
 
@@ -57,9 +55,7 @@ def admin_account():
 
 @pytest.fixture(scope="function")
 def none_account():
-    """Fixture for creating and deleting admin account
-
-    """
+    """Fixture for creating and deleting admin account"""
     account_name = "mr_none"
     account = _create_none_account(account_name)
 
