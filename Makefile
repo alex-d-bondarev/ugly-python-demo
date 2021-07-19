@@ -1,5 +1,5 @@
 #.DEFAULT_GOAL := help
-demo_path = ./tests/demo/
+demo_path = ./tests/improved/
 
 help:
 	@echo "make \t\t\t- print supported commands"
