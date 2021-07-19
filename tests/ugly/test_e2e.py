@@ -8,7 +8,7 @@ pytestmark = [pytest.mark.demo]
 
 @pytest.mark.done
 def test_something_slow_as_admin():
-    r = requests.get('http://127.0.0.1:5000/')
+    r = requests.get("http://127.0.0.1:5000/")
     assert r.status_code == 200
 
     account_url = "http://127.0.0.1:5000/account"
@@ -33,7 +33,9 @@ def test_something_slow_as_admin():
 
     time.sleep(4)
 
-    assert _execute_process_status_decision_helper(response.status_code, do_somethin_url, r, response)
+    assert _execute_process_status_decision_helper(
+        response.status_code, do_somethin_url, r, response
+    )
 
     delete_account = dict()
     delete_account["name"] = "demo_test"
@@ -42,7 +44,7 @@ def test_something_slow_as_admin():
 
 @pytest.mark.done
 def test_something_slow_with_limited_permissions():
-    r = requests.get('http://127.0.0.1:5000/')
+    r = requests.get("http://127.0.0.1:5000/")
     assert r.status_code == 200
 
     account_url = "http://127.0.0.1:5000/account"
@@ -65,7 +67,9 @@ def test_something_slow_with_limited_permissions():
     response = requests.request("POST", do_somethin_url, data=do_something_data)
     assert response.status_code == 403
 
-    assert _execute_process_status_decision_helper(response.status_code, do_somethin_url, r, response)
+    assert _execute_process_status_decision_helper(
+        response.status_code, do_somethin_url, r, response
+    )
 
     delete_account = dict()
     delete_account["name"] = "demo_test"
@@ -73,9 +77,16 @@ def test_something_slow_with_limited_permissions():
 
 
 def _execute_process_status_decision_helper(code, do_somethin_url, r, response):
-    if code == 403:
+    if _cannot_do_something(code):
         return True
     else:
         process_id = response.json()["process_id"]
         r = requests.get(do_somethin_url + "/" + str(process_id))
         return "done" == r.json()["status"]
+
+
+def _cannot_do_something(code):
+    if code == 403:
+        return True
+    else:
+        return False
