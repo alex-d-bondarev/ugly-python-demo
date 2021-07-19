@@ -30,7 +30,7 @@ isort:
 	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run isort $(demo_path)
 
 flake8:
-	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run flake8 $(demo_path) --output-file=flake8.log
+	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run flake8 $(demo_path) --output-file=flake8.log --exit-zero
 
 maintainability_index:
 	PIPENV_IGNORE_VIRTUALENVS=1 pipenv run radon mi $(demo_path) --json --output-file=radon.log

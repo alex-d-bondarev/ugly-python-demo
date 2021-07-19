@@ -13,9 +13,10 @@ def clean_before_test():
 
 
 def _trancate_file(file_path):
-    file = open(file_path, "r+")
-    file.truncate(0)
-    file.close()
+    if os.path.exists(file_path):
+        file = open(file_path, "r+")
+        file.truncate(0)
+        file.close()
 
 
 def check_quality():
